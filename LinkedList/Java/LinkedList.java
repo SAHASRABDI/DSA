@@ -110,17 +110,94 @@ class LinkedList {
 
     }
 
+    // DELETION FUNCTIONS
+    public Node deleteNode(int delVal) {
+        // Assign head to temp
+        // Keep a track on the previous node
+        Node temp = head;
+        Node previous = null;
+        // condition 1: only head
+        if (head == null) {
+            System.out.println("No node to delete");
+            return head;
+        }
+        // condition 2:only 1 node and thats to be deleted
+        if (temp.next == null && temp.data == delVal) {
+            head = null;
+            System.out.println(delVal + " is deleted");
+            return head;
+        }
+        // condition 3:delete the head node
+        if (temp.next != null && temp.data == delVal) {
+            head = temp.next;
+            // in java we dont need to use free/delete ..its managed by garbage collector
+            System.out.println(delVal + " is deleted");
+            return head;
+        }
+        // condition 4:traverse till you get the value else if not found print it
+        while (temp != null && temp.data != delVal) {
+            previous = temp;
+            temp = temp.next;
+        }
+
+        // if temp.next==null then value not vound
+        if (temp == null) {
+            System.out.println("Value not found");
+            return (head);
+        }
+        previous.next = temp.next;
+        System.out.println(delVal + " is deleted");
+        return (head);
+
+    }
+
+    public Node deleteAtPos(int pos) {
+        int size = calcSize(head);
+
+        if (pos < 1 || pos > size) {
+            System.out.println("Invalid position");
+            return (head);
+        } else {
+            Node temp = head;
+            // Node previous=null;
+            // if only 1 node
+            if (pos == 1) {
+                head = temp.next;
+                System.out.println("Value at position 1 which is " + temp.data + " is deleted");
+                return (head);
+            }
+            // traverse until found
+            for (int i = 0; i < pos - 2; i++) {
+                temp = temp.next;
+            }
+            temp.next = temp.next.next;
+            System.out.println("Value deleted");
+            return (head);
+        }
+    }
+
     // main method
     public static void main(String args[]) {
         // create object of LinkedList class
         LinkedList list = new LinkedList();// list is the object
+        list.deleteAtPos(1);// no node present
         list.insertStart(20);
+        list.deleteNode(20);// only one node present
         list.insertStart(30);
         list.insertStart(40);
         list.insertLast(16);
         list.insertLast(17);
         list.insertLast(18);
         list.insertPos(25, 3);
+        list.display();
+        // deletion
+        // list.deleteNode(18);// delete last node
+        // list.deleteNode(8);// not present
+        // list.deleteNode(40);// delete node somewhere between
+        list.deleteAtPos(30);// invalid
+        list.display();
+        list.deleteAtPos(4);
+        list.deleteAtPos(5);
         list.display();
 
     }
