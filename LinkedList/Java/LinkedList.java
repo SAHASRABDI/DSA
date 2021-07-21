@@ -10,6 +10,7 @@ class Node {
     // variables
     Node next;
     int data;
+    public Node prev;
 
     // constructor
     // constructor has the same name as it's class and initialises the class
